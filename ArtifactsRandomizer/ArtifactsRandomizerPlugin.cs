@@ -9,16 +9,25 @@ namespace ArtifactsRandomizer
 {
     [R2APISubmoduleDependency(nameof(CommandHelper))]
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "1.0.0")]
+    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "1.1.0")]
     public class ArtifactsRandomizerPlugin : BaseUnityPlugin
     {
         private static ConfigWrapper<bool> isEnabled { get; set; }
+        private static ConfigWrapper<string> blacklist { get; set; }
+
+        private static ArtifactIndex[] blackListIndex => blacklist.Value
+            .Split(new char[] { ',', ' ' }, System.StringSplitOptions.RemoveEmptyEntries)
+            .Select(el => ArtifactCatalog.FindArtifactIndex(el))
+            .Where(el => el != ArtifactIndex.None)
+            .ToArray();
 
         public void Awake()
         {
             CommandHelper.AddToConsoleWhenReady();
 
             isEnabled = Config.Wrap("Main", "enabled", "Is mod should randomize artifacts or not", true);
+
+            blacklist = Config.Wrap("Main", "blacklist", "Artifact names (comma separated) that should be ingored when randomizing", "");
 
             On.RoR2.Run.Start += (orig, self) =>
             {
@@ -39,17 +48,18 @@ namespace ArtifactsRandomizer
             {
                 return;
             }
-            var enabledCount = Random.Range(0, ArtifactCatalog.artifactCount + 1);
-            var range = Enumerable.Range(0, ArtifactCatalog.artifactCount).ToList();
-            for (var i = 0; i <= enabledCount; i++)
+            var range = Enumerable.Range(0, ArtifactCatalog.artifactCount).Select(el => (ArtifactIndex)el).ToList();
+            range = range.Except(blackListIndex).ToList();
+            var enabledCount = Random.Range(0, range.Count + 1);
+            for (var i = 1; i <= enabledCount; i++)
             {
                 var index = Random.Range(0, range.Count);
-                RunArtifactManager.instance.SetArtifactEnabledServer(ArtifactCatalog.GetArtifactDef((ArtifactIndex)index), true);
+                RunArtifactManager.instance.SetArtifactEnabledServer(ArtifactCatalog.GetArtifactDef(range[index]), true);
                 range.RemoveAt(index);
             }
             for (var i = 0; i < range.Count; i++)
             {
-                RunArtifactManager.instance.SetArtifactEnabledServer(ArtifactCatalog.GetArtifactDef((ArtifactIndex)range[i]), false);
+                RunArtifactManager.instance.SetArtifactEnabledServer(ArtifactCatalog.GetArtifactDef(range[i]), false);
             }
         }
 
