@@ -5,21 +5,17 @@ Randomizes artifacts on every stage
 
 * `ar_status` - Shows is artifacts randomization enabled or disabled
 
-* `ar_disable` - Disable artifacts randomization. Rememebers status even if game is restarted.
+* `ar_disable` - Disable artifacts randomization. Remembers status even if the game is restarted.
 
 * `ar_enable` - Enable artifacts randomization.
 
-# Blacklist
-You can add artifacts that will not be randomized. If you enable artifacts that are blacklisted, they will be enabled for the whole run.
-To blacklist artifacts you should edit `blacklist` entry in config file `BepInEx/config/com.KingEnderBrine.ArtifactsRandomizer.cfg`.
-It should be equal to comma-separated artifact names.
+# Randomization modes
+There are 2 randomization modes: `Weight`, `Chance`. 
+You can switch mode by editing `randomizationMode` entry in config file `BepInEx/config/com.KingEnderBrine.ArtifactsRandomizer.cfg`.
 
-Example:
-```
-blacklist = FriendlyFire, TeamDeath, WeakAssKnees, WispOnDeath
-```
-
-# Artifact weights
+## Weight
+***
+#### Artifact weights
 You can add weight for specific artifacts it will affect artifact enabling chance.
 To do that you should edit `artifactWeights` entry in config file `BepInEx/config/com.KingEnderBrine.ArtifactsRandomizer.cfg`.
 It should be equal to comma-separated entries that are like this pattern: `{Artifact name}: {weight}`.
@@ -30,10 +26,33 @@ Example:
 artifactWeights = Bomb: 20, Command: 75, Glass: 30
 ```
 
-# Maximum artifacts count
-You can set the maximum count of artifacts that will be enabled.
+#### Blacklist
+You can add artifacts that will not be randomized in `Weight` randomization mode. If you enable artifacts that are blacklisted, they will be enabled for the whole run.
+To blacklist artifacts you should edit `blacklist` entry in config file `BepInEx/config/com.KingEnderBrine.ArtifactsRandomizer.cfg`.
+It should be equal to comma-separated artifact names.
+
+Example:
+```
+blacklist = FriendlyFire, TeamDeath, WeakAssKnees, WispOnDeath
+```
+#### Maximum artifacts count
+You can set the maximum count of artifacts that will be enabled with the `Weight` randomization mode.
 To do that you should edit `maxCount` entry in config file `BepInEx/config/com.KingEnderBrine.ArtifactsRandomizer.cfg`.
 If you set it to `-1` then all artifacts could be enabled at once
+
+## Chance
+***
+#### Artifact chances
+You can add a chance for individual artifacts.
+To do that you should edit `artifactChances` entry in config file `BepInEx/config/com.KingEnderBrine.ArtifactsRandomizer.cfg`.
+It should be equal to comma-separated entries that are like this pattern: `{Artifact name}: {chance}`.
+Chance should be in a range from 0 to 1 inclusive, where 0 - artifact always disabled, 1 - artifact always enabled.
+Artifacts that are not included in that list have a default chance of 0.
+
+Example:
+```
+artifactWeights = Bomb: 0.2, Command: 1, Glass: 0.4
+```
 
 ***
 # List of artifact names
@@ -73,6 +92,12 @@ Must be used exact names from that list (for vanilla, modded artifacts could als
 
 ***
 # Changelog
+
+**1.3.0**
+
+* Added randomization modes
+
+* Added artifact chances randomization mode
 
 **1.2.0**
 
