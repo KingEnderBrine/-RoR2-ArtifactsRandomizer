@@ -12,7 +12,7 @@ namespace ArtifactsRandomizer
 {
     [R2APISubmoduleDependency(nameof(CommandHelper))]
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "1.3.0")]
+    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "1.4.0")]
     public class ArtifactsRandomizerPlugin : BaseUnityPlugin
     {
         public enum Randomization
@@ -26,6 +26,7 @@ namespace ArtifactsRandomizer
         private static ConfigWrapper<string> ArtifactWeights { get; set; }
         private static ConfigWrapper<string> ArtifactChances { get; set; }
         private static ConfigWrapper<int> MaxCount { get; set; }
+        private static ConfigWrapper<int> MinCount { get; set; }
         private static ConfigWrapper<Randomization> RandomizationMode { get; set; }
 
         private static WeightedSelection<ArtifactIndex> ArtifactWeightsSelection {
@@ -89,12 +90,13 @@ namespace ArtifactsRandomizer
 
             IsEnabled = Config.Wrap("Main", "enabled", "Is mod should randomize artifacts or not", true);
             RandomizationMode = Config.Wrap("Main", "randomizationMode", "Randomization mode which will be used", Randomization.Weight);
+            Blacklist = Config.Wrap("Main", "blacklist", "Artifact names (comma-separated) that should be ingored when randomizing", "");
 
             ArtifactChances = Config.Wrap("Chance", "artifactChances", "Artifact chance with names (comma-separated).\nExample: `Bomb: 0.1, Command: 0.2`", "");
            
-            Blacklist = Config.Wrap("Weght", "blacklist", "Artifact names (comma-separated) that should be ingored when randomizing", "");
             ArtifactWeights = Config.Wrap("Weght", "artifactWeights", "Artifact weight with names (comma-separated).\nExample: `Bomb: 20, Command: 50`", "");
             MaxCount = Config.Wrap("Weght", "maxCount", "Maximum count of artifacts to be enabled via randomization", -1);
+            MinCount = Config.Wrap("Weght", "minCount", "Minimum count of artifacts to be enabled via randomization", 0);
 
 
             On.RoR2.Run.Start += (orig, self) =>
@@ -134,7 +136,9 @@ namespace ArtifactsRandomizer
             {
                 selection.RemoveChoice((int)index);
             }
-            var enabledCount = Random.Range(0, Mathf.Max(1, Mathf.Min(selection.Count + 1, MaxCount.Value == -1 ? selection.Count + 1 : MaxCount.Value + 1)));
+            var maximum = Mathf.Max(0, Mathf.Min(selection.Count, MaxCount.Value == -1 ? selection.Count : MaxCount.Value));
+            var minimum = Mathf.Max(0, Mathf.Min(MinCount.Value, maximum));
+            var enabledCount = Random.Range(minimum, maximum + 1);
             for (var i = 1; i <= enabledCount; i++)
             {
                 var index = selection.EvaluteToChoiceIndex(Random.Range(0F, 1F));

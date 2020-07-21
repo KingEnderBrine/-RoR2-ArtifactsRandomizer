@@ -1,6 +1,6 @@
 {
     "name": "ArtifactsRandomizer",
-    "version_number": "1.3.0",
+    "version_number": "1.4.0",
     "website_url": "https://github.com/KingEnderBrine/-RoR2-ArtifactsRandomizer",
     "description": "Randomizes artifacts on every stage",
     "dependencies": [
