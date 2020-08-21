@@ -98,6 +98,12 @@ Must be used exact names from that list (for vanilla, modded artifacts could als
 ***
 # Changelog
 
+**1.4.1**
+
+* Marked as client side mod.
+
+* This time actuially updated(lol)
+
 **1.4.0**
 
 * Added minimum count of randomized artifacts (Weight mode)
@@ -115,6 +121,10 @@ Must be used exact names from that list (for vanilla, modded artifacts could als
 * Added maximum count of randomized artifacts
 
 * Added weights config, so you can change artifact enabling chance
+
+**1.1.1**
+
+* Accidentally updated old version to `RoR` 1.0 update
 
 **1.1.0**
 

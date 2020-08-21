@@ -10,9 +10,10 @@ using UnityEngine;
 
 namespace ArtifactsRandomizer
 {
+    [NetworkCompatibility(CompatibilityLevel.NoNeedForSync)]
     [R2APISubmoduleDependency(nameof(CommandHelper))]
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "1.4.0")]
+    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "1.4.1")]
     public class ArtifactsRandomizerPlugin : BaseUnityPlugin
     {
         public enum Randomization
@@ -21,13 +22,13 @@ namespace ArtifactsRandomizer
             Chance
         }
 
-        private static ConfigWrapper<bool> IsEnabled { get; set; }
-        private static ConfigWrapper<string> Blacklist { get; set; }
-        private static ConfigWrapper<string> ArtifactWeights { get; set; }
-        private static ConfigWrapper<string> ArtifactChances { get; set; }
-        private static ConfigWrapper<int> MaxCount { get; set; }
-        private static ConfigWrapper<int> MinCount { get; set; }
-        private static ConfigWrapper<Randomization> RandomizationMode { get; set; }
+        private static ConfigEntry<bool> IsEnabled { get; set; }
+        private static ConfigEntry<string> Blacklist { get; set; }
+        private static ConfigEntry<string> ArtifactWeights { get; set; }
+        private static ConfigEntry<string> ArtifactChances { get; set; }
+        private static ConfigEntry<int> MaxCount { get; set; }
+        private static ConfigEntry<int> MinCount { get; set; }
+        private static ConfigEntry<Randomization> RandomizationMode { get; set; }
 
         private static WeightedSelection<ArtifactIndex> ArtifactWeightsSelection {
             get
@@ -88,15 +89,15 @@ namespace ArtifactsRandomizer
         {
             CommandHelper.AddToConsoleWhenReady();
 
-            IsEnabled = Config.Wrap("Main", "enabled", "Is mod should randomize artifacts or not", true);
-            RandomizationMode = Config.Wrap("Main", "randomizationMode", "Randomization mode which will be used", Randomization.Weight);
-            Blacklist = Config.Wrap("Main", "blacklist", "Artifact names (comma-separated) that should be ingored when randomizing", "");
+            IsEnabled = Config.Bind("Main", "enabled", true, "Is mod should randomize artifacts or not");
+            RandomizationMode = Config.Bind("Main", "randomizationMode", Randomization.Weight, "Randomization mode which will be used");
+            Blacklist = Config.Bind("Main", "blacklist", "Artifact names (comma-separated) that should be ingored when randomizing", "");
 
-            ArtifactChances = Config.Wrap("Chance", "artifactChances", "Artifact chance with names (comma-separated).\nExample: `Bomb: 0.1, Command: 0.2`", "");
+            ArtifactChances = Config.Bind("Chance", "artifactChances", "", "Artifact chance with names (comma-separated).\nExample: `Bomb: 0.1, Command: 0.2`");
            
-            ArtifactWeights = Config.Wrap("Weght", "artifactWeights", "Artifact weight with names (comma-separated).\nExample: `Bomb: 20, Command: 50`", "");
-            MaxCount = Config.Wrap("Weght", "maxCount", "Maximum count of artifacts to be enabled via randomization", -1);
-            MinCount = Config.Wrap("Weght", "minCount", "Minimum count of artifacts to be enabled via randomization", 0);
+            ArtifactWeights = Config.Bind("Weght", "artifactWeights", "", "Artifact weight with names (comma-separated).\nExample: `Bomb: 20, Command: 50`");
+            MaxCount = Config.Bind("Weght", "maxCount", -1, "Maximum count of artifacts to be enabled via randomization");
+            MinCount = Config.Bind("Weght", "minCount", 0, "Minimum count of artifacts to be enabled via randomization");
 
 
             On.RoR2.Run.Start += (orig, self) =>
