@@ -9,20 +9,40 @@
   </Target>
 
   <ItemGroup>
+    <None Remove="kingenderbrine_artifactsrandomizer" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="kingenderbrine_artifactsrandomizer" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\CommonLibs\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
       <HintPath>..\..\CommonLibs\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="InLobbyConfig">
+      <HintPath>..\..\CommonLibs\InLobbyConfig.dll</HintPath>
+    </Reference>
     <Reference Include="MMHOOK_Assembly-CSharp">
       <HintPath>..\..\CommonLibs\MMHOOK_Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="ProperSave">
+      <HintPath>..\..\CommonLibs\ProperSave.dll</HintPath>
     </Reference>
     <Reference Include="R2API">
       <HintPath>..\..\CommonLibs\R2API.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>..\..\RoR2 code\Assembly-CSharp\lib\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\CommonLibs\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>C:\Users\Admin\Desktop\F\RoR2 Modding\CommonLibs\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\CommonLibs\UnityEngine.CoreModule.dll</HintPath>
@@ -30,6 +50,13 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>..\..\CommonLibs\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\CommonLibs\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="set &quot;assetBundle=kingenderbrine_artifactsrandomizer&quot;&#xD;&#xA;set &quot;assetBundlePath=..\$(TargetName)Unity\AssetBundles\StandaloneWindows\%25assetBundle%25&quot;&#xD;&#xA;if not exist &quot;%25assetBundlePath%25&quot; exit&#xD;&#xA;xcopy /Y /D &quot;%25assetBundlePath%25&quot;" />
+  </Target>
 
 </Project>
