@@ -109,7 +109,7 @@ namespace ArtifactsRandomizer
             inLobbyConfigEntry.SectionFields["Main"] = new List<IConfigField>
             {
                 new EnumConfigField<Randomization>(RandomizationMode.Definition.Key, RandomizationMode.Description.Description, () => RandomizationMode.Value, (newValue) => RandomizationMode.Value = newValue),
-                new ArtifactBlacklistField(Blacklist.Definition.Key, Blacklist.Description.Description, GetBlacklistIndices, AddBlacklistIndex, RemoveBlacklistIndex)
+                new SelectListField<ArtifactIndex>(Blacklist.Definition.Key, Blacklist.Description.Description, GetBlacklistIndices, AddBlacklistIndex, RemoveBlacklistIndex, GetArtifactOptions)
             };
             inLobbyConfigEntry.SectionFields["Chance"] = new List<IConfigField>
             {
@@ -124,6 +124,11 @@ namespace ArtifactsRandomizer
                 new ArtifactWeightField(ArtifactWeights.Definition.Key, ArtifactWeights.Description.Description, GetArtifactWeights, AddArtifactWeight, RemoveArtifactWeight, EndEditArtifactWeight)
             };
             ModConfigCatalog.Add(inLobbyConfigEntry);
+        }
+
+        private static Dictionary<ArtifactIndex, string> GetArtifactOptions()
+        {
+            return ArtifactCatalog.artifactDefs.ToDictionary(el => el.artifactIndex, el => Language.GetString(el.nameToken));
         }
 
         private static List<ArtifactIndex> GetBlacklistIndices()

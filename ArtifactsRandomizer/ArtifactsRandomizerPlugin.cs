@@ -17,7 +17,7 @@ namespace ArtifactsRandomizer
     [BepInDependency("com.KingEnderBrine.ProperSave", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.KingEnderBrine.InLobbyConfig")]
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "2.0.0")]
+    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "2.1.0")]
     public class ArtifactsRandomizerPlugin : BaseUnityPlugin
     {
         public enum Randomization

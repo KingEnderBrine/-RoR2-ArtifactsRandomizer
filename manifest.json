@@ -1,11 +1,11 @@
 {
     "name": "ArtifactsRandomizer",
-    "version_number": "2.0.0",
+    "version_number": "2.1.0",
     "website_url": "https://github.com/KingEnderBrine/-RoR2-ArtifactsRandomizer",
     "description": "Randomizes artifacts on every stage",
     "dependencies": [
         "bbepis-BepInExPack-5.3.1",
-        "tristanmcpherson-R2API-2.5.28",
-        "KingEnderBrine-InLobbyConfig-1.0.0"
+        "tristanmcpherson-R2API-2.5.14",
+        "KingEnderBrine-InLobbyConfig-1.1.0"
     ]
 }
