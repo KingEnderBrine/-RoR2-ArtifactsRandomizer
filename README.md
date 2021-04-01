@@ -34,6 +34,10 @@ You can add a chance for individual artifacts.
 Chance should be in a range from 0 to 1 inclusive, where 0 - artifact always disabled, 1 - artifact always enabled.
 
 # Changelog
+**2.2.0**
+
+* Removed r2api dependency
+
 **2.1.1**
 
 * Fixed randomization not working for vanilla artifacts.

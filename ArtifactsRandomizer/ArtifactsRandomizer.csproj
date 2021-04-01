@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\CommonLibs\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\CommonLibs\Assembly-CSharp.refstub.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
       <HintPath>..\..\CommonLibs\BepInEx.dll</HintPath>
@@ -32,17 +32,14 @@
     <Reference Include="ProperSave">
       <HintPath>..\..\CommonLibs\ProperSave.dll</HintPath>
     </Reference>
-    <Reference Include="R2API">
-      <HintPath>..\..\CommonLibs\R2API.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\RoR2 code\Assembly-CSharp\lib\Unity.TextMeshPro.dll</HintPath>
+      <HintPath>..\..\CommonLibs\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\CommonLibs\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>C:\Users\Admin\Desktop\F\RoR2 Modding\CommonLibs\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>..\..\CommonLibs\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\CommonLibs\UnityEngine.CoreModule.dll</HintPath>

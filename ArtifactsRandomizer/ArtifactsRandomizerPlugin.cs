@@ -1,9 +1,7 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
-using R2API.Utils;
 using RoR2;
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.Permissions;
@@ -11,13 +9,13 @@ using UnityEngine;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
+[assembly: R2API.Utils.ManualNetworkRegistration]
+[assembly: EnigmaticThunder.Util.ManualNetworkRegistration]
 namespace ArtifactsRandomizer
 {
-    [NetworkCompatibility(CompatibilityLevel.NoNeedForSync)]
     [BepInDependency("com.KingEnderBrine.ProperSave", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.KingEnderBrine.InLobbyConfig")]
-    [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "2.1.1")]
+    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "2.2.0")]
     public class ArtifactsRandomizerPlugin : BaseUnityPlugin
     {
         public enum Randomization
@@ -109,7 +107,7 @@ namespace ArtifactsRandomizer
             var selection = new WeightedSelection<ArtifactIndex>();
             foreach (var artifact in ArtifactCatalog.artifactDefs)
             {
-                if (!string.IsNullOrWhiteSpace(artifact.unlockableName) && !Run.instance.unlockablesUnlockedByAnyUser.Contains(artifact.unlockableName))
+                if (artifact.unlockableDef && !Run.instance.unlockablesUnlockedByAnyUser.Contains(artifact.unlockableDef))
                 {
                     continue;
                 }
@@ -143,7 +141,7 @@ namespace ArtifactsRandomizer
         {
             foreach (var artifact in ArtifactCatalog.artifactDefs)
             {
-                if (!string.IsNullOrWhiteSpace(artifact.unlockableName) && !Run.instance.unlockablesUnlockedByAnyUser.Contains(artifact.unlockableName))
+                if (artifact.unlockableDef && !Run.instance.unlockablesUnlockedByAnyUser.Contains(artifact.unlockableDef))
                 {
                     continue;
                 }
