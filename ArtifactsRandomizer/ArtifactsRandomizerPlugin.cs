@@ -9,13 +9,11 @@ using UnityEngine;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
-[assembly: R2API.Utils.ManualNetworkRegistration]
-[assembly: EnigmaticThunder.Util.ManualNetworkRegistration]
 namespace ArtifactsRandomizer
 {
     [BepInDependency("com.KingEnderBrine.ProperSave", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.KingEnderBrine.InLobbyConfig")]
-    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "2.2.0")]
+    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "2.2.1")]
     public class ArtifactsRandomizerPlugin : BaseUnityPlugin
     {
         public enum Randomization
@@ -69,7 +67,10 @@ namespace ArtifactsRandomizer
         {
             try
             {
-                RandomizeRunArtifacts();
+                if (!ConfigHelper.OnlyAtRunStart.Value)
+                {
+                    RandomizeRunArtifacts();
+                }
             }
             catch (Exception e)
             {

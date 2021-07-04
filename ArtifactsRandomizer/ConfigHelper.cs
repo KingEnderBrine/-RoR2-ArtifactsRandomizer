@@ -16,6 +16,7 @@ namespace ArtifactsRandomizer
     {
         public static ConfigEntry<bool> Enabled { get; set; }
         public static ConfigEntry<string> Blacklist { get; set; }
+        public static ConfigEntry<bool> OnlyAtRunStart { get; set; }
         public static ConfigEntry<string> ArtifactWeights { get; set; }
         public static ConfigEntry<int> DefaultWeight { get; set; }
         public static ConfigEntry<string> ArtifactChances { get; set; }
@@ -35,6 +36,7 @@ namespace ArtifactsRandomizer
             Enabled = Config.Bind("Main", nameof(Enabled), true, "Is mod should randomize artifacts or not");
             RandomizationMode = Config.Bind("Main", nameof(RandomizationMode), Randomization.Weight, "Randomization mode which will be used");
             Blacklist = Config.Bind("Main", nameof(Blacklist), "", "Artifact indices (comma-separated) that should be ingored when randomizing");
+            OnlyAtRunStart = Config.Bind("Main", nameof(OnlyAtRunStart), false, "If true, randomization will only happen once at the start of the run, otherwise every stage");
 
             DefaultChance = Config.Bind("Chance", nameof(DefaultChance), 0F, "Chance that will be applied to artifacts without custom chance");
             ArtifactChances = Config.Bind("Chance", nameof(ArtifactChances), "", "Artifact chance with indices (comma-separated).\nExample: `1: 0.1, 3: 0.2`");
@@ -109,7 +111,8 @@ namespace ArtifactsRandomizer
             inLobbyConfigEntry.SectionFields["Main"] = new List<IConfigField>
             {
                 new EnumConfigField<Randomization>(RandomizationMode.Definition.Key, RandomizationMode.Description.Description, () => RandomizationMode.Value, (newValue) => RandomizationMode.Value = newValue),
-                new SelectListField<ArtifactIndex>(Blacklist.Definition.Key, Blacklist.Description.Description, GetBlacklistIndices, AddBlacklistIndex, RemoveBlacklistIndex, GetArtifactOptions)
+                new SelectListField<ArtifactIndex>(Blacklist.Definition.Key, Blacklist.Description.Description, GetBlacklistIndices, AddBlacklistIndex, RemoveBlacklistIndex, GetArtifactOptions),
+                new BooleanConfigField(OnlyAtRunStart.Definition.Key, OnlyAtRunStart.Description.Description, () => OnlyAtRunStart.Value, (newValue) => OnlyAtRunStart.Value = newValue)
             };
             inLobbyConfigEntry.SectionFields["Chance"] = new List<IConfigField>
             {

@@ -9,6 +9,10 @@ There are 2 randomization modes: `Weight`, `Chance`.
 ## Blacklist
 You can add artifacts that won't be affected by randomization. If you enable artifacts that are blacklisted, they will be enabled for the whole run.
 
+## OnlyAtRunStart
+
+If true, randomization will only happen once at the start of the run, otherwise every stage
+
 ## Weight
 
 #### Default weight
@@ -34,9 +38,13 @@ You can add a chance for individual artifacts.
 Chance should be in a range from 0 to 1 inclusive, where 0 - artifact always disabled, 1 - artifact always enabled.
 
 # Changelog
+**2.2.1**
+
+* Added config option to randomize artifact only at the start of a run.
+
 **2.2.0**
 
-* Removed r2api dependency
+* Removed r2api dependency.
 
 **2.1.1**
 
