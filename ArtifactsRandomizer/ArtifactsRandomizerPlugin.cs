@@ -13,7 +13,7 @@ namespace ArtifactsRandomizer
 {
     [BepInDependency("com.KingEnderBrine.ProperSave", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.KingEnderBrine.InLobbyConfig")]
-    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "2.2.1")]
+    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "2.2.2")]
     public class ArtifactsRandomizerPlugin : BaseUnityPlugin
     {
         public enum Randomization
@@ -108,7 +108,7 @@ namespace ArtifactsRandomizer
             var selection = new WeightedSelection<ArtifactIndex>();
             foreach (var artifact in ArtifactCatalog.artifactDefs)
             {
-                if (artifact.unlockableDef && !Run.instance.unlockablesUnlockedByAnyUser.Contains(artifact.unlockableDef))
+                if (artifact.unlockableDef && !Run.instance.IsUnlockableUnlocked(artifact.unlockableDef))
                 {
                     continue;
                 }
@@ -142,7 +142,7 @@ namespace ArtifactsRandomizer
         {
             foreach (var artifact in ArtifactCatalog.artifactDefs)
             {
-                if (artifact.unlockableDef && !Run.instance.unlockablesUnlockedByAnyUser.Contains(artifact.unlockableDef))
+                if (artifact.unlockableDef && !Run.instance.IsUnlockableUnlocked(artifact.unlockableDef))
                 {
                     continue;
                 }
