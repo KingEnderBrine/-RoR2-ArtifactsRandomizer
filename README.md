@@ -38,6 +38,10 @@ You can add a chance for individual artifacts.
 Chance should be in a range from 0 to 1 inclusive, where 0 - artifact always disabled, 1 - artifact always enabled.
 
 # Changelog
+**2.3.0**
+
+* Fixes for `Survivors of the Void` update
+
 **2.2.1**
 
 * Added config option to randomize artifact only at the start of a run.

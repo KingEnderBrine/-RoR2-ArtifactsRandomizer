@@ -7,13 +7,12 @@ using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
 
-[module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
 namespace ArtifactsRandomizer
 {
     [BepInDependency("com.KingEnderBrine.ProperSave", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.KingEnderBrine.InLobbyConfig")]
-    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "2.2.1")]
+    [BepInPlugin("com.KingEnderBrine.ArtifactsRandomizer", "Artifacts Randomizer", "2.3.0")]
     public class ArtifactsRandomizerPlugin : BaseUnityPlugin
     {
         public enum Randomization
@@ -27,7 +26,7 @@ namespace ArtifactsRandomizer
         internal static ArtifactsRandomizerPlugin Instance { get; private set; }
         internal static ManualLogSource InstanceLogger => Instance?.Logger;
 
-        public void Awake()
+        public void Start()
         {
             Instance = this;
 
@@ -37,10 +36,7 @@ namespace ArtifactsRandomizer
 
             On.RoR2.Run.Start += RunStart;
             On.RoR2.Run.AdvanceStage += RunAdvanceStage;
-        }
 
-        public void Start()
-        {
             ConfigHelper.InitConfig(Config);
             ConfigHelper.InitInLobbyConfig();
         }
@@ -80,7 +76,7 @@ namespace ArtifactsRandomizer
             orig(self, nextScene);
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool CheckProperSaveLoading()
         {
             return ProperSave.Loading.IsLoading;
@@ -128,7 +124,7 @@ namespace ArtifactsRandomizer
             var enabledCount = UnityEngine.Random.Range(minimum, maximum + 1);
             for (var i = 1; i <= enabledCount; i++)
             {
-                var index = selection.EvaluteToChoiceIndex(UnityEngine.Random.Range(0F, 1F));
+                var index = selection.EvaluateToChoiceIndex(UnityEngine.Random.Range(0F, 1F));
                 RunArtifactManager.instance.SetArtifactEnabledServer(ArtifactCatalog.GetArtifactDef(selection.GetChoice(index).value), true);
                 selection.RemoveChoice(index);
             }
