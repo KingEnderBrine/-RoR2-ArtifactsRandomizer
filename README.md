@@ -38,9 +38,17 @@ You can add a chance for individual artifacts.
 Chance should be in a range from 0 to 1 inclusive, where 0 - artifact always disabled, 1 - artifact always enabled.
 
 # Changelog
+**2.3.1**
+
+* Include 2.2.2 fixes
+
 **2.3.0**
 
 * Fixes for `Survivors of the Void` update
+
+**2.2.2**
+
+* Fixed an issue where having `UnlockAll` mod would lead to not selecting artifacts that have an unlock condition
 
 **2.2.1**
 
